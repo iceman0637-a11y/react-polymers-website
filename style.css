@@ -27,6 +27,17 @@ h1 {
   margin: 0;
 }
 
+h1 a {
+  color: inherit;
+  text-decoration: none;
+  transition : padding-left 0.2s ease;
+}
+
+header h1 a:hover,
+header h1 a:focus-visible {
+  padding-left: 0.25rem;
+}
+
 .burgerbutton {
   background: none;
   border: 1px solid #333;
