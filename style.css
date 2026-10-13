@@ -114,5 +114,5 @@ h2 {
 }
 
 @view-transition{
-  navigation: :auto;
+  navigation: auto;
 }
