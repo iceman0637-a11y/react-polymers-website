@@ -1,4 +1,5 @@
 body {
+  font-family: sans-serif;
   background-image: url(images/black_plastic1-1024x683.webp);
   background-size: cover;
   background-position: center;
@@ -37,7 +38,6 @@ h1 {
 }
 
 .burgerlist {
-  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -46,6 +46,17 @@ h1 {
   list-style: none;
   margin: 0;
   padding: 0 1rem 1rem;
+
+  
+  visibility: hidden;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.4s ease, visibility 0.4s;
+}
+
+.openburger {
+  
+  visibility: visible;
+  clip-path: inset(0 0 0 0);
 }
 
 .burgerlist a {
@@ -53,9 +64,15 @@ h1 {
   padding: 0.5rem 0;
   color: white;
   text-decoration: none;
+  transition: color 0.2s ease, padding-left 0.2s ease;
 }
 
-.openburger {
-  display: block;
+.burgerlist a:hover,
+.burgerlist a:focus-visible {
+  color: #ffee00;
+  padding-left: 0.5rem;
 }
+
+
+
 
