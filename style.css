@@ -8,22 +8,24 @@ body {
   background-attachment: fixed;
 }
 
-body > header {
+body > #header-placeholder {
   margin: -8px -8px 0 -8px;
 }
 
-header {
+#header-placeholder {
   font-size: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background: rgb(12, 12, 12);
   color: white;
   padding: 1rem;
+  position: relative;
+  view-transition-name: site-header;
+}
+
+.head-spacing {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  view-transition-name: site-header;
-  
 }
 
 h1 {
