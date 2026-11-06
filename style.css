@@ -276,6 +276,10 @@ h2 {
   navigation: auto;
 }
 
+.section hr {
+  margin-right : 4%;
+}
+
 /* ==========================================================================
    Products
    ========================================================================== */
@@ -400,4 +404,62 @@ select:focus {
     animation-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* submit form */
+
+#submit-form {
+   display: inline-block;
+  text-decoration: none;
+  color: var(--on-dark);
+  background-color: rgb(12, 12, 12);
+  border: 1px solid var(--border-dark);
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin: 10px;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease,
+    padding-left 0.25s var(--ease), transform 0.2s ease;
+}
+
+#submit-form:hover,
+#submit-form:focus-visible {
+  background: linear-gradient(90deg, #4a56c9, #b04fa0);
+  border-color: transparent;
+  box-shadow: var(--glow);
+  padding-left: 1rem;
+  transform: translateX(-2px);
+  cursor: pointer;
+}
+
+.form{
+  
+  max-width: 480px;
+  margin: 1.5rem auto 1rem;
+  padding: 1.5rem;
+  padding-left: 1.5rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface-strong);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.form input,
+.form textarea {
+  display: block;
+  width: 100%;
+  margin: 0.4rem 0 1.1rem;
+}
+
+.form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.form input:hover,
+.form textarea:hover {
+  border-color: rgba(124, 140, 255, 0.4);
 }
