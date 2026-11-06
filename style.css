@@ -1,25 +1,123 @@
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+:root {
+  --bg: #08090d;
+  --bg-glow-1: rgba(124, 140, 255, 0.22);
+  --bg-glow-2: rgba(255, 122, 217, 0.12);
+  --surface: rgba(20, 22, 32, 0.72);
+  --surface-strong: rgba(26, 29, 42, 0.85);
+  --surface-border: rgba(255, 255, 255, 0.1);
+  --header-bg: rgba(12, 12, 12, 0.92);
+  --text: #eceef5;
+  --text-muted: #9aa0b4;
+  --on-dark: #f4f5f7;
+  --accent: #7c8cff;
+  --accent-soft: #a5b0ff;
+  --accent-pink: #ff7ad9;
+  --gradient: linear-gradient(90deg, var(--accent), var(--accent-pink));
+  --border-dark: rgba(255, 255, 255, 0.14);
+
+  --radius-sm: 6px;
+  --radius: 14px;
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+  --glow: 0 0 24px rgba(124, 140, 255, 0.35);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
 body {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-   /* background-image: url(images/black_plastic1-1024x683.webp); */
-  background-color: rgb(167, 165, 165);
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* background-image: url(images/black_plastic1-1024x683.webp); */
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, var(--bg-glow-1), transparent 60%),
+    radial-gradient(800px 520px at 100% 0%, var(--bg-glow-2), transparent 60%),
+    radial-gradient(900px 600px at 50% 120%, rgba(124, 140, 255, 0.1), transparent 60%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
+a {
+  color: var(--accent-soft);
+}
+
+::selection {
+  background: rgba(124, 140, 255, 0.4);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
 body > #header-placeholder {
-  margin: -8px -8px 0 -8px;
+  margin: -10px -10px 0 -10px;
 }
 
 #header-placeholder {
   font-size: 10px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background: rgb(12, 12, 12);
-  color: white;
+  font-family: var(--font);
+  background:
+    radial-gradient(600px 140px at 88% -50%, rgba(124, 140, 255, 0.28), transparent 70%),
+    radial-gradient(500px 140px at 4% 150%, rgba(255, 122, 217, 0.16), transparent 70%),
+    var(--header-bg);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  color: var(--on-dark);
   padding: 1rem;
   position: relative;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-dark);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   view-transition-name: site-header;
+}
+
+/* animated glowing line along the bottom of the header */
+#header-placeholder::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-pink), var(--accent), transparent);
+  background-size: 200% 100%;
+  animation: header-glow 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes header-glow {
+  to {
+    background-position: -200% 0;
+  }
 }
 
 .head-spacing {
@@ -31,39 +129,54 @@ body > #header-placeholder {
 h1 {
   margin: 0;
   font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 h1 a {
-  color: inherit;
+  color: transparent;
+  background: linear-gradient(90deg, #ffffff 0%, var(--accent-soft) 55%, #ff9be3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-decoration: none;
-  transition : padding-left 0.2s ease;
+  transition: padding-left 0.25s var(--ease), filter 0.25s ease;
 }
 
 header h1 a:hover,
 header h1 a:focus-visible {
   padding-left: 0.25rem;
+  filter: drop-shadow(0 0 10px rgba(124, 140, 255, 0.7)) brightness(1.15);
 }
 
+/* ==========================================================================
+   Burger menu
+   ========================================================================== */
 .burgerbutton {
   text-align: center;
-  background: none;
-  border: 1px solid #333;
-  border-radius: 4px;
-  color: white;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  color: var(--on-dark);
   font-size: 1.5rem;
   padding: 0.25rem 0.6rem;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
 }
 
 .burgerbutton:hover {
-  background-color: #222;
-  border-color: #665;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px rgba(124, 140, 255, 0.45);
+}
+
+.burgerbutton:active {
+  transform: scale(0.94);
 }
 
 .burgericon {
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform 0.35s var(--ease);
 }
 
 .burgerbutton.activate .burgericon {
@@ -71,21 +184,25 @@ header h1 a:focus-visible {
 }
 
 .burgerlist {
-  font-size: 12px;
+  font-size: 15px;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: rgb(12, 12, 12);
+  background: var(--header-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   list-style: none;
   margin: 0;
-  padding: 0 1rem 1rem; 
+  padding: 0 1rem 1rem;
+  border-bottom: 1px solid var(--border-dark);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
   visibility: hidden;
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.4s ease, visibility 0.4s;
+  transition: clip-path 0.4s var(--ease), visibility 0.4s;
 }
 
-.openburger {  
+.openburger {
   visibility: visible;
   clip-path: inset(0 0 0 0);
 }
@@ -93,25 +210,52 @@ header h1 a:focus-visible {
 .burgerlist a {
   display: inline-block;
   padding: 0.5rem 0;
-  color: white;
+  color: var(--on-dark);
   text-decoration: none;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition: color 0.25s ease, padding-left 0.25s var(--ease);
 }
 
 .burgerlist a:hover,
 .burgerlist a:focus-visible {
-  color: #665;
+  color: var(--accent-soft);
   padding-left: 0.5rem;
 }
 
-.section {
+/* ==========================================================================
+   Content sections (dark glass cards with a glowing top edge)
+   ========================================================================== */
+.section,
+#products-text,
+.product-section {
+  position: relative;
   min-height: auto;
-  margin : auto;
-  background: rgba(250, 250, 250, 0.85);
+  margin: 40px;
+  background:
+    radial-gradient(500px 120px at 90% -20%, rgba(124, 140, 255, 0.14), transparent 70%),
+    var(--surface);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--surface-border);
   padding-bottom: 2.5%;
   padding-left: 2.5%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius);
+}
+
+/* thin gradient accent along the top of each section */
+.section::before,
+#products-text::before,
+.product-section::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-pink), transparent);
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 h2 {
@@ -119,22 +263,22 @@ h2 {
   padding-top: 40px;
   text-decoration: none;
   font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #ffffff 0%, var(--accent-soft) 60%, #ff9be3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-@view-transition{
+@view-transition {
   navigation: auto;
 }
 
-
-#products-text{
-  min-height: auto;
-  margin : auto;
-  background: rgba(250, 250, 250, 0.85);
-  padding-bottom: 2.5%;
-  padding-left: 2.5%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-}
+/* ==========================================================================
+   Products
+   ========================================================================== */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -145,16 +289,18 @@ h2 {
 .product {
   display: flex;
   flex-direction: column;
-  background: rgba(250, 250, 250, 0.85);
-  border-radius: 8px;
+  background: var(--surface-strong);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s ease;
 }
 
 .product:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-6px);
+  border-color: rgba(124, 140, 255, 0.55);
+  box-shadow: var(--shadow-lg), var(--glow);
 }
 
 .product img {
@@ -162,51 +308,96 @@ h2 {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.product:hover img {
+  transform: scale(1.05);
 }
 
 .product h3 {
   margin: 1rem 1rem 0.5rem;
+  letter-spacing: -0.01em;
+  color: var(--on-dark);
 }
 
 .product p {
   margin: 0 1rem 1rem;
   flex-grow: 1;
+  color: var(--text-muted);
 }
 
 .product-button {
-  color:black;
+  color: inherit;
   text-decoration: none;
-}
-
-.product-section {
-  min-height: auto;
-  margin : auto;
-  background: rgba(250, 250, 250, 0.85);
-  padding-bottom: 2.5%;
-  padding-left: 2.5%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
 }
 
 .product-section hr {
   margin: 15px 35px 5px 5px;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(124, 140, 255, 0.5), transparent);
 }
 
+/* ==========================================================================
+   Back button
+   ========================================================================== */
 .back-button {
   display: inline-block;
   text-decoration: none;
-  color: white;
+  color: var(--on-dark);
   background-color: rgb(12, 12, 12);
-  padding: 7px;
-  border-radius: 6px;
+  border: 1px solid var(--border-dark);
+  padding: 7px 14px;
+  border-radius: 999px;
   margin: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
   text-align: center;
-  transition: color 0.2s ease, padding-left 0.2s ease;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease,
+    padding-left 0.25s var(--ease), transform 0.2s ease;
 }
 
-.back-button:hover ,
+.back-button:hover,
 .back-button:focus-visible {
-  background-color: #665;
-  padding-left: 0.5rem;
+  background: linear-gradient(90deg, #4a56c9, #b04fa0);
+  border-color: transparent;
+  box-shadow: var(--glow);
+  padding-left: 1rem;
+  transform: translateX(-2px);
+}
+
+/* ==========================================================================
+   Form controls (match the dark theme if a page uses them)
+   ========================================================================== */
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 140, 255, 0.25);
+}
+
+/* ==========================================================================
+   Accessibility: respect reduced-motion preference
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
