@@ -92,7 +92,7 @@ body > #header-placeholder {
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   backdrop-filter: blur(12px) saturate(140%);
   color: var(--on-dark);
-  padding: 1rem;
+  padding: 1.3rem;
   position: relative;
   z-index: 100;
   border-bottom: 1px solid var(--border-dark);
@@ -462,4 +462,73 @@ select:focus {
 .form input:hover,
 .form textarea:hover {
   border-color: rgba(124, 140, 255, 0.4);
+}
+
+
+
+/* FOOTER */
+
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  /* full-width like the header (cancels the body's 8px margin) */
+  margin: 40px -8px -8px -8px;
+  padding: 1.5rem 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background:
+    radial-gradient(600px 140px at 12% 150%, rgba(124, 140, 255, 0.2), transparent 70%),
+    radial-gradient(500px 140px at 92% 150%, rgba(255, 122, 217, 0.12), transparent 70%),
+    var(--header-bg);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  border-top: 1px solid var(--border-dark);
+}
+
+/* glowing gradient line along the top edge, like the header's */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-pink), var(--accent), transparent);
+  background-size: 200% 100%;
+  animation: header-glow 6s linear infinite;
+  pointer-events: none;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer li {
+  color: var(--text);
+}
+
+/* stack and center on phones */
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer ul {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
 }
